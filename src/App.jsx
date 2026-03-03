@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Navbar from "./Navbar";
+import "./App.css";
 
 function App() {
   let [text, setText] = useState("");
@@ -20,10 +20,13 @@ function App() {
   }
 
   function WordCount(word) {
+    
     const value = word.split(" ");
+    
     value.filter((res) => {
       return res !== " ";
     });
+    
     return value.length;
   }
 
@@ -34,126 +37,67 @@ function App() {
 
   function CopyText(e) {
     e.preventDefault();
+    
     navigator.clipboard
-      .writeText(text)
-      .then(() => alert("Text copied to clipboard!"))
-      .catch((err) => console.error("Error copying text:", err));
+    .writeText(text)
+    .then(() => alert("Text copied to clipboard!"))
+    .catch((err) => console.error("Error copying text:", err));
   }
 
   return (
     <>
-      <Navbar />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "45vh",
-          padding: "20px",
-        }}
-      >
-        <form
-          style={{
-            textAlign: "center",
-            padding: "30px",
-            borderRadius: "12px",
-            width: "700px",
-            backgroundColor: "#fff",
-            // boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <h2 style={{ marginBottom: "15px", fontSize: "22px", color: "#333" }}>
-            Enter Text to Analyze
-          </h2>
+      <div className="container">
+        
+        <form className="form-box">
+        
+          <h2 className="heading">Enter Text to Analyze</h2>
+
           <textarea
-            type="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Type text here..."
-            style={{
-              width: "100%",
-              height: "100px",
-              padding: "12px",
-              fontSize: "16px",
-              borderRadius: "8px",
-              border: "1px solid #ccc",
-              outline: "none",
-              resize: "none",
-              transition: "0.3s",
-            }}
+            className="text-area"
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "12px",
-              marginTop: "20px",
-              flexWrap: "wrap",
-            }}
-          >
-            <button onClick={UpperCase} style={buttonStyle}>
+
+          <div className="button-group">
+
+            <button onClick={UpperCase} className="btn primary">
               Uppercase
             </button>
-            <button onClick={LowerCase} style={buttonStyle}>
+            
+            <button onClick={LowerCase} className="btn primary">
               Lowercase
             </button>
-            <button onClick={RemoveSpaces} style={buttonStyle}>
+            
+            <button onClick={RemoveSpaces} className="btn secondary">
               Remove Spaces
             </button>
-            <button onClick={clearText} style={clearButtonStyle}>
+            
+            <button onClick={clearText} className="btn danger">
               Clear Text
             </button>
-            <button onClick={CopyText} style={copyButtonStyle}>
+            
+            <button onClick={CopyText} className="btn success">
               Copy Text
             </button>
+          
           </div>
+    
         </form>
+  
       </div>
 
-      <div
-        style={{
-          textAlign: "center",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "20px",
-        }}
-      >
-        <h3 style={{ fontSize: "20px", color: "#555", cursor: "help"}}><u>Your Text Summary.</u></h3>
-        <h4 style={{ fontSize: "18px", color: "#333" }}>
-          Text Length: <strong>{text.length}</strong>
-        </h4>
-        <h4 style={{ fontSize: "18px", color: "#333" }}>
-          Word Count: <strong>{text ? WordCount(text) : 0}</strong>
-        </h4>
+      <div className="summary">
+
+        <h3>✈️ Your Text Summary ✈️</h3>
+        
+        <p>Text Length: <strong>{text.length}</strong></p>
+        <p>Word Count: <strong>{text ? WordCount(text) : 0}</strong></p>
+      
       </div>
     </>
   );
+
 }
 
 export default App;
-
-const buttonStyle = {
-  padding: "10px 15px",
-  fontSize: "16px",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
-  backgroundColor: "#007bff",
-  color: "white",
-  transition: "0.3s",
-  fontWeight: "bold",
-  minWidth: "120px",
-};
-
-const clearButtonStyle = {
-  ...buttonStyle,
-  backgroundColor: "#dc3545",
-};
-
-const copyButtonStyle = {
-  ...buttonStyle,
-  backgroundColor: "#28a745",
-};
-
